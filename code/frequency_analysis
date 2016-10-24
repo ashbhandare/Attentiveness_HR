@@ -1,0 +1,69 @@
+import pandas as pd
+import numpy as np
+from numpy import fft
+# import stft.spectogram
+import scipy, pylab
+
+def stft(x, fs, framesz, hop):
+    framesamp = int(framesz*fs)
+    hopsamp = int(hop*fs)
+    w = scipy.hanning(framesamp)
+    X = scipy.array([scipy.fft(w*x[i:i+framesamp])for i in range(0, len(x)-framesamp, hopsamp)])
+    return X
+
+def short_time_ft(hr,N):
+	f0 = 100         # Compute the STFT of a 440 Hz sinusoid
+	# fs = 1        # sampled at 8 kHz
+	fs=8000
+	# T = N            # lasting 5 seconds
+	T=5
+	# framesz = 5  # with a frame size of 50 milliseconds
+	framesz = 0.05
+	# hop = 2.5      # and hop size of 25 milliseconds.
+	hop = 0.025
+
+    # Create test signal and STFT.
+	t = scipy.linspace(0, T, T*fs, endpoint=False)
+	# x = hr
+	x=scipy.sin(2*scipy.pi*f0*t)
+	X = stft(x, fs, framesz, hop)
+
+    # Plot the magnitude spectrogram.
+	pylab.figure()
+	pylab.imshow(scipy.absolute(X.T), origin='lower', aspect='auto',
+                 interpolation='nearest')
+	pylab.xlabel('Time')
+	pylab.ylabel('Frequency')
+	pylab.show()
+
+
+Results_File_Path = r'C:/Users/Ash/Desktop/mobile sensing/project/Results_'+str(147717653638)+'.csv'
+
+proc_data =  pd.read_csv(Results_File_Path, header=0)
+
+print proc_data['Heart_Rate'].values
+hr = proc_data['Heart_Rate'].values
+N= hr.shape[0]
+T=1
+fs = 1/T
+# f = open("hr", "wb")
+# f.write(hr)
+# f.close()
+
+# hr.to_csv('C:/Users/Ash/Desktop/mobile sensing/project/hrcsv.csv', index=False)
+
+# spectogram = stft.spectogram(proc_data['Heart_Rate'].values)
+short_time_ft(hr,N)
+# short_time_ft()
+
+# fft_hr = fft.fft(hr)
+# print fft_hr.shape[0] - N
+
+# print fft_hr
+
+# xf = np.linspace(0.0, 1.0/(2.0*T), N/2)
+# import matplotlib.pyplot as plt
+# plt.plot(xf, 2.0/N * np.abs(fft_hr[0:N/2]))
+# plt.grid()
+# plt.show()
+
