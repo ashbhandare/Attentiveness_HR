@@ -2,9 +2,9 @@ import pandas as pd
 import numpy as np
 import time
 pd.options.mode.chained_assignment = None
-HR_Data_File_Path = r'C:/Users/Ash/Desktop/mobile sensing/project/fitbit_1.csv'
-Sensor_Data_File_Path = r'C:/Users/Ash/Desktop/mobile sensing/project/sensor_1.csv'
-Results_File_Path = r'C:/Users/Ash/Desktop/mobile sensing/project/Results_'+str(time.time()).replace('.','')+'.csv'
+HR_Data_File_Path = r'C:/Users/sanke/fitbit_1.csv'
+Sensor_Data_File_Path = r'C:/Users/sanke/sensor_1.csv'
+Results_File_Path = r'C:/Users/sanke/Results_'+str(time.time()).replace('.','')+'.csv'
 
 hr_data = pd.read_csv(HR_Data_File_Path, header=0)
 hr_data['TIME']=0
