@@ -1,0 +1,17 @@
+import pandas as pd
+import numpy as np
+
+Results_File_Path = r'C:/project_data/Results_'+str(14772838151)+'.csv'
+proc_data = pd.read_csv(Results_File_Path, header=0)
+proc_data = np.array(proc_data.drop(['Time_Val','Time_sec'], axis=1))
+
+from sklearn.decomposition import PCA
+
+pca1 = PCA()
+
+pca1.fit(proc_data)
+
+print(pca1.components_)
+print(pca1.explained_variance_)
+
+print(pca1.explained_variance_ratio_)

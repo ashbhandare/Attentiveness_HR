@@ -2,9 +2,9 @@ import pandas as pd
 import numpy as np
 import time
 pd.options.mode.chained_assignment = None
-HR_Data_File_Path = r'C:/Users/sanke/fitbit_1.csv'
-Sensor_Data_File_Path = r'C:/Users/sanke/sensor_1.csv'
-Results_File_Path = r'C:/Users/sanke/Results_'+str(time.time()).replace('.','')+'.csv'
+HR_Data_File_Path = r'C:/project_data/fitbit_1.csv'
+Sensor_Data_File_Path = r'C:/project_data/sensor_1.csv'
+Results_File_Path = r'C:/project_data/Results_'+str(time.time()).replace('.','')+'.csv'
 
 hr_data = pd.read_csv(HR_Data_File_Path, header=0)
 hr_data['TIME']=0
@@ -41,12 +41,12 @@ for i in range(0, len(sensor_data)):
     
     #Use a threshold to determine if phone is active or not after checking proximity sensor
     if sensor_data['PROXIMITY (i)'][i]==0:
-        active_flag = 'No'
+        active_flag = 0
     else:
         if int(sensor_data['LINEAR ACCELERATION X'][i])>axl_threshold:
-            active_flag = 'Yes'
+            active_flag = 1
         else:
-            active_flag = 'No'
+            active_flag = 0
     
     sensor_time = sensor_data['TIME'][i]
     #lookup heart rate data based on time stamp
