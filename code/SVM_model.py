@@ -3,6 +3,22 @@ import numpy as np
 from sklearn import svm
 from sklearn import preprocessing
 
+def clean(raw_data):
+	raw_data['HR_std'] = 0
+
+	raw_data['HR_std'] = preprocessing.scale(raw_data['Heart_Rate'])
+	
+	for index, row in raw_data.iterrows():
+		
+		row['User_Attention'] = 1 if (row['User_Attention']<3) else 3 if  (row['User_Attention']>3) else 2
+		row['Sound'] = 1 if (row['Sound']<30) else 2 if  (row['Sound']<50) else 3 if (row['Sound']<60) else 4 if  (row['Sound']<90) else 5 if (row['Sound']<120) else 6
+		row['Light'] = 1 if (row['Light']<50) else 2 if  (row['Light']<80) else 3 if (row['Light']<100) else 4 if  (row['Light']<320) else 5 if (row['Light']<500) else 6
+
+	raw_opt = np.array(raw_data['User_Attention'])
+	raw_ipt = np.array(raw_data.drop(['User_Attention', 'Heart_Rate'], axis=1))
+	return raw_ipt,raw_opt
+
+
 pd.options.mode.chained_assignment = None
 Root_Folder = r'C:/Users/Ash/Documents/GitHub/Attentiveness_HR/Data/'
 # for p in range(0,8):
@@ -20,31 +36,12 @@ Root_Folder = r'C:/Users/Ash/Documents/GitHub/Attentiveness_HR/Data/'
 #     train_data = pd.read_csv(Results_File_Path, header=0)
 
 # Training_File_Path = Root_Folder + 'Results_'+str('15_21_46_Ashok')+'_from_sensor_'+str(1)+'.csv'
+
 Training_File_Path = Root_Folder + 'combined.csv'
-
 train_data = pd.read_csv(Training_File_Path, header=0)
-train_data['HR_std'] = 0
-# train_data['']
-# train_data['HR_dif'][-1] = 0 
+train_ipt,train_opt = clean(raw_data)
 
-
-# for x in range(1,len(train_data)-1):
-#     train_data['HR_dif'][x] = train_data['Heart_Rate'][x] - train_data['Heart_Rate'][x-1]
-# print max(train_data['Sound'])
-
-
-train_data['HR_std'] = preprocessing.scale(train_data['Heart_Rate'])
-train_data['Sound'] /= 80
-train_data['Light'] /= 100
-
-train_opt = np.array(train_data['User_Attention'])
-
-train_ipt = np.array(train_data.drop(['User_Attention','Heart_Rate'], axis=1))
-
-# for x in range(0,(len(proc_data)-1)/4):
-#     train_ipt[x] = ipt[x]
-
-# print str(train_opt.values)+str("\t")+str(train_ipt.values)
+#
 clf = svm.SVC()
 clf.fit(train_ipt, train_opt)
 
