@@ -3,20 +3,6 @@ import numpy as np
 from sklearn import svm
 from sklearn import preprocessing
 
-def clean(raw_data):
-	raw_data['HR_std'] = 0
-
-	raw_data['HR_std'] = preprocessing.scale(raw_data['Heart_Rate'])
-	
-	for index, row in raw_data.iterrows():
-		
-		row['User_Attention'] = 1 if (row['User_Attention']<3) else 3 if  (row['User_Attention']>3) else 2
-		row['Sound'] = 1 if (row['Sound']<30) else 2 if  (row['Sound']<50) else 3 if (row['Sound']<60) else 4 if  (row['Sound']<90) else 5 if (row['Sound']<120) else 6
-		row['Light'] = 1 if (row['Light']<50) else 2 if  (row['Light']<80) else 3 if (row['Light']<100) else 4 if  (row['Light']<320) else 5 if (row['Light']<500) else 6
-
-	raw_opt = np.array(raw_data['User_Attention'])
-	raw_ipt = np.array(raw_data.drop(['User_Attention', 'Heart_Rate'], axis=1))
-	return raw_ipt,raw_opt
 
 
 pd.options.mode.chained_assignment = None
@@ -37,15 +23,16 @@ Root_Folder = r'C:/Users/Ash/Documents/GitHub/Attentiveness_HR/Data/'
 
 # Training_File_Path = Root_Folder + 'Results_'+str('15_21_46_Ashok')+'_from_sensor_'+str(1)+'.csv'
 
-Training_File_Path = Root_Folder + 'combined.csv'
+Training_File_Path = Root_Folder + 'combined_new.csv'
 train_data = pd.read_csv(Training_File_Path, header=0)
-train_ipt,train_opt = clean(raw_data)
 
-#
+train_opt = np.array(train_data['User_Attention'])
+train_ipt = np.array(train_data.drop(['User_Attention', 'Heart_Rate', 'Time_Val','Time_sec','Phone_Active','Trust Factor'], axis=1))
+
 clf = svm.SVC()
 clf.fit(train_ipt, train_opt)
 
-Test_File_Path =  Root_Folder + 'Results_'+str('19_54_46_Tejas')+'_from_sensor_'+str(6)+'.csv'
+Test_File_Path =  Root_Folder + 'ResultsNew_'+str('19_54_46_Tejas')+'_from_sensor_'+str(6)+'.csv'
 test_data = pd.read_csv(Test_File_Path, header=0)
 test_data['HR_std'] = 0
 # proc_data['']

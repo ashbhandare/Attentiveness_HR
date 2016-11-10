@@ -10,7 +10,7 @@ def clean_data(raw_data):
 
 	for i in range(len(raw_data)):
 	
-		if (raw_data['Phone_Active'][i] == 1 or raw_data['Trust Factor'][i] == 1):
+		if (raw_data['Phone_Active'][i] == 1 or raw_data['Trust Factor'][i] == 0):
 
 			raw_data['User_Attention'][i] = 1 
 		raw_data['User_Attention'][i] = 1 if (raw_data['User_Attention'][i]<3) else 3 if  (raw_data['User_Attention'][i]>3) else 2
