@@ -1,0 +1,87 @@
+Determinitic Quicksort
+Average case performance time is n long n
+Worst case performance if n2
+
+Since: When sorted list is given, we take the first element as pivot. 
+Everything else after that becomes the next partition. This partition contains 
+n-1 items. For 1 level, the time required fr recursioin is n. In n time we got 
+rid of 1 item. To get rid of (n-1) items, we need (n2) time.
+
+Getiing rid of 1 item will go on for (n-1) times.
+
+In level 1 we will perform n-1-i comparisions.
+
+n-1-i:
+
+For i=0, value is n-1
+
+For i=1, value is n-2
+
+For i=2, value is n-3
+
+.
+.
+.
+
+For i=n-2, value is 1.
+
+So the sum is (n-1) + (n-2) + (n-3) + .....+ 3 + 2 + 1
+
+This is equal to the sum of numbers from 1 to n-1.
+This is given by n(n-1)/2
+
+This is of the order of (n2)
+
+Thus we see that, depending on permutation of input values, it varies. Now, our 
+aim is to make it independent such that no matter what the order, it will run 
+in nlog n time.
+
+In Quicksort, we split the input numbers by a pivot that half the numbers are smaller than it and other 
+half are greater. The partitions are n/2-n/2, in the ideal case.
+But we are unlikely to be that lucky. It is very unlikely that we will get a 
+number that will give us two exact same size partitions.
+
+But even if we are not that lucky, let us say we are at least lucky enough to 
+get a pivot such that the divisions are 25%-75%.
+
+We will start with an array of size n, and divide it into 2 parts, each of size  
+
+n/4, 3n/4
+
+How deep will this subtree be?
+We know that the rightmost branch will be the longest, and this will go on till it is of size 1. 
+
+Let us say it goes down k level deep.
+
+(3/4) ^ k *n =1.
+
+Thus k = log n 
+
+This is of the order of log n.
+
+Note: Even if we are not lucky enough to have even splits all the way, we
+      will still be able to solve it in O(nlog n) time
+
+
+
+Now, it is also very difficult to be this lucky, so as to get 25%-75% divisions all the way. 
+So, instead of choosing first item in the array, we choose one at random. 
+
+If there are n elements, the probability of each being pickedis 1/n.
+
+Now our aim is to pick an element that is smaller than 25% of the items and larger than 25% of the items.
+
+This means, we can pick any element in the middle 50% of the values.
+
+Thus it is okay to choose any one of the n/2 values which are greater than 25% and less than 25%.
+Thus the probability is n/2.
+
+Q. Does it work only if array is sorted?
+ans. No. It works even if array is not sorted.
+
+now, our concern is, 
+
+
+
+
+

@@ -20,68 +20,41 @@ Root_Folder = r'C:/Users/Ash/Documents/GitHub/Attentiveness_HR/Data/'
 #     train_data = pd.read_csv(Results_File_Path, header=0)
 
 # Training_File_Path = Root_Folder + 'Results_'+str('15_21_46_Ashok')+'_from_sensor_'+str(1)+'.csv'
-Training_File_Path = Root_Folder + 'combined.csv'
-train_data = pd.read_csv(Training_File_Path, header=0)
-# train_data['HR_dif'] = 0
-train_data['HR_std'] = 0
-
-# train_data['']
-# train_data['HR_dif'][-1] = 0 
-
-
-# for x in range(1,len(train_data)-1):
-	
-#     train_data['HR_dif'][x] = train_data['Heart_Rate'][x] - train_data['Heart_Rate'][x-1]
-# # print max(train_data['Sound'])
-
-train_data['HR_std'] = preprocessing.scale(train_data['Heart_Rate'])
-train_data['Sound'] /= 80
-train_data['Light'] /= 100
-
-# print train_data['Light']
+Training_File_Path = Root_Folder + 'combined1.csv'
+# Training_File_Path = Root_Folder + 'ResultsNew_'+str('15_21_46_Ashok')+'_from_sensor_'+str(1)+'.csv'
+train_data =pd.read_csv(Training_File_Path, header=0,error_bad_lines=False)
 
 train_opt = np.array(train_data['User_Attention'])
 
 train_ipt = np.array(train_data.drop(['User_Attention', 'Heart_Rate'], axis=1))
 
-# for x in range(0,(len(proc_data)-1)/4):
-#     train_ipt[x] = ipt[x]
-
-# print str(train_opt.values)+str("\t")+str(train_ipt.values)
 print 'Training...'
 nn = Classifier(
     layers=[
-        Layer("Sigmoid", units=4),
+        Layer("Sigmoid", units=3),
         Layer("Softmax",units=5),
-        Layer("Softmax",units=5)],
+        Layer("Softmax",units=3)],
     learning_rate=0.5,
     n_iter=5)
 
 
 nn.fit(train_ipt,train_opt)
 
-Test_File_Path = Root_Folder + 'Results_'+str('19_54_46_Tejas')+'_from_sensor_'+str(6)+'.csv'
+Test_File_Path =  Root_Folder + 'ResultsNew_'+str('17_55_59_Rohit')+'_from_sensor_'+str(5)+'.csv'
+
+# Test_File_Path =  Root_Folder + 'ResultsNew_'+str('19_54_46_Tejas')+'_from_sensor_'+str(6)+'.csv'
 test_data = pd.read_csv(Test_File_Path, header=0)
-test_data['HR_std'] = 0
-# proc_data['']
-# proc_data['HR_dif'][-1] = 0 
 
-
-# for x in range(1,len(test_data)-1):
-#     test_data['HR_dif'][x] = test_data['Heart_Rate'][x] - test_data['Heart_Rate'][x-1]
-test_data['HR_std'] = preprocessing.scale(test_data['Heart_Rate'])
-test_data['Sound'] /= 80
-test_data['Light'] /= 100
 
 
 test_opt = np.array(test_data['User_Attention'])
-test_ipt = np.array(test_data.drop(['User_Attention','Time_Val','Time_sec','Heart_Rate'], axis=1))
+test_ipt = np.array(test_data.drop(['User_Attention', 'Heart_Rate', 'Time_Val','Time_sec','Phone_Active','Trust Factor'], axis=1))
 
 
 print 'Predicting...'
 op = nn.predict(test_ipt)
 
-f = open("test_ANN_op_HR_std_combined6", "wb")
+f = open("test_ANN_op_HR_std_combined5", "wb")
 exact_match = 0.0
 match = 0.0
 
