@@ -36,8 +36,8 @@ clf = svm.SVC()
 clf.fit(train_ipt, train_opt)
 
 # Test_File_Path =  Root_Folder + 'Results_Sampled_'+str('19_54_46_Tejas')+'_from_sensor_'+str(6)+'.csv'
-# Test_File_Path =  Root_Folder + 'Results_Sampled_'+str('17_55_59_Rohit')+'_from_sensor_'+str(5)+'.csv'
-Test_File_Path =  Root_Folder + 'Results_Sampled_'+str('17_20_44_Shamanth')+'_from_sensor_'+str(4)+'.csv'
+Test_File_Path =  Root_Folder + 'Results_Sampled_'+str('17_55_59_Rohit')+'_from_sensor_'+str(5)+'.csv'
+# Test_File_Path =  Root_Folder + 'Results_Sampled_'+str('17_20_44_Shamanth')+'_from_sensor_'+str(4)+'.csv'
 
 test_data = pd.read_csv(Test_File_Path, header=0)
 # test_data['HR_std'] = 0
