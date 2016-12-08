@@ -3,7 +3,7 @@ import numpy as np
 
 def sample_data(raw_data):
 	#Overwrite this variable to change the resolution
-	sampling_interval=2
+	sampling_interval=1
 	
 	#Create a dataframe to store the processed results
 	proc_data = pd.DataFrame(0.0, index=np.arange(len(raw_data)/sampling_interval), columns = ['Mean_Heart_Rate', 'Min_Heart_Rate', 'Max_Heart_Rate', 'Mean_HR_std', 'Min_HR_std', 'Max_HR_std', 'Mode_Sound', 'Mode_Light', 'Mode_Attention'])
@@ -48,7 +48,7 @@ def sample_data(raw_data):
 pd.options.mode.chained_assignment = None
 Root_Folder = r'C:/Users/sanke/Documents/GitHub/Attentiveness_HR/Data/'
 #Overwrite this variable to change the resolution
-sampling_interval=2
+sampling_interval=1
 for p in range(0,8):
 	People_Index = ['14_51_48_Namita', '15_21_46_Ashok', '15_51_46_Mengshu', '16_53_43_Aniket', '17_20_44_Shamanth', '17_55_59_Rohit', '19_54_46_Tejas', '23_08_50_Sourav' ]
 	Results_File_Path_new = Root_Folder + 'ResultsNew_'+str(People_Index[p])+'_from_sensor_'+str(p)+'.csv'

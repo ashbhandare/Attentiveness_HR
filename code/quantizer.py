@@ -13,7 +13,7 @@ def clean_data(raw_data):
 		if (raw_data['Phone_Active'][i] == 1 or raw_data['Trust Factor'][i] == 0):
 
 			raw_data['User_Attention'][i] = 1 
-		raw_data['User_Attention'][i] = 1 if (raw_data['User_Attention'][i]<3) else 3 if  (raw_data['User_Attention'][i]>3) else 2
+		#raw_data['User_Attention'][i] = 1 if (raw_data['User_Attention'][i]<3) else 3 if  (raw_data['User_Attention'][i]>3) else 2
 		raw_data['Sound'][i] = 1 if (raw_data['Sound'][i]<30) else 2 if  (raw_data['Sound'][i]<50) else 3 if (raw_data['Sound'][i]<60) else 4 if  (raw_data['Sound'][i]<90) else 5 if (raw_data['Sound'][i]<120) else 6
 		raw_data['Light'][i] = 1 if (raw_data['Light'][i]<50) else 2 if  (raw_data['Light'][i]<80) else 3 if (raw_data['Light'][i]<100) else 4 if  (raw_data['Light'][i]<320) else 5 if (raw_data['Light'][i]<500) else 6
 		# print raw_data['User_Attention'][i]
@@ -23,7 +23,7 @@ def clean_data(raw_data):
 	return raw_data
 
 pd.options.mode.chained_assignment = None
-Root_Folder = r'C:/Users/Ash/Documents/GitHub/Attentiveness_HR/Data/'
+Root_Folder = r'C:/Users/sanke/Documents/GitHub/Attentiveness_HR/Data/'
 for p in range(0,8):
     if p<3:
         hr_index=1
@@ -35,7 +35,7 @@ for p in range(0,8):
     HR_Data_File_Path = Root_Folder+ 'fitbit_'+str(hr_index)+'.csv'
     Sensor_Data_File_Path = Root_Folder + 'sensor_'+str(p)+'.csv'
     Results_File_Path = Root_Folder + 'Results_'+str(People_Index[p])+'_from_sensor_'+str(p)+'.csv'
-    Results_File_Path_new = Root_Folder + 'ResultsNew_'+str(People_Index[p])+'_from_sensor_'+str(p)+'.csv'
+    Results_File_Path_new = Root_Folder + 'Results_Quantized_'+str(People_Index[p])+'_from_sensor_'+str(p)+'.csv'
     print Results_File_Path
     train_data = pd.read_csv(Results_File_Path, header=0)
     raw_data=clean_data(train_data)
